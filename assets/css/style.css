@@ -1,5 +1,7 @@
-.container {
-    text-align: center;
+.row {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;    
 }
 .button {
     text-align: center;
@@ -20,5 +22,8 @@
     font-size: 100px;
 }
 #timer {
-    font-size: 35px;
+    font-size: 40px;
 }
+
+
+  
