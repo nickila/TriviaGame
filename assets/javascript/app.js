@@ -1,7 +1,4 @@
 $(document).ready(function () {
-
-
-
     // Make a trivia game that asks five questions and gives four multiple choice answers to choose from.
     // Use javascript for the functionality and jQuery to transfer it to html document. There will be a timer
     // for each question. The game will silently track correct answers, incorrect answers and timed out answers.
@@ -43,29 +40,16 @@ $(document).ready(function () {
         wrongAns3: "YELLOW",
     }
     var answerChosen = 1;
-    // $("#answer1").html("");
-    // $("#answer2").html("");
-    // $("#answer3").html("");
-    // $("#answer4").html("");
 
-    // Grab a random index from the qa arrays but not index 0.
-    //console.log(answerChosen);
     startGame();
 
     function startGame() {
-
-        //$(".answer").hide();
         $(".startButton").unbind().click(function () {
-            //Stuff
             $(".startButton").slideToggle(300);
-
-            //$(".startButton").on("click", function () {
-            //$(".answer").off();
-            //$(".startButton").slideUp(200);
             askQuestions();
-
         });
     }
+
     function askQuestions() {
         if (answerChosen == 1) {
             display(qa1);
@@ -79,34 +63,13 @@ $(document).ready(function () {
         if (answerChosen == 4) {
             display(qa4);
         }
-
-
-
-
-
     }
-    // function reset() {
-    // $("#question").html("");
-    // $("#timer").html("");
-    // answerChosen = 1;
-    // $("#correct").html("");
-    // $("#incorrect").html("");
-    // $("#timed-out").html("");
-    // $(".startButton").slideDown(200);
-    // // $("#timer").off();
-    // correctTotal=0;
-    // incorrectTotal=0;
-    // timedOutTotal=0;
-    //         startGame();
-    // }
-    //display(qa2);
 
     function display(obj) {
-        // $("#timer").off();
         $(".answer").off();
         console.log("first" + obj.answer);
+        $("#timer").html("15 SECONDS");
         runTimer();
-        //answerChosen=1;
 
         $("#question").html(obj.question);
         var stringedAns = [];
@@ -117,107 +80,128 @@ $(document).ready(function () {
         $("#answer2").append(stringedAns[1]);
         $("#answer3").append(stringedAns[2]);
         $("#answer4").append(stringedAns[3]);
-        //$(".answer").slideToggle(300);
         console.log("all: " + stringedAns)
         $(".answer").unbind().click(function () {
-            // if (timer > 0) {
-            //     console.log("clicked: ", $(this).text())
-            //     console.log("answer: ", obj.answer)
             if ($(this).text() == (obj.answer)) {
                 correctTotal++
 
                 stopTimer();
                 $("#timer").html("CORRECT!");
-                //$("#timer").css({ color: "green" })
-                //$(".answer").slideToggle(300);
                 $("#answer1").html("");
                 $("#answer2").html("");
                 $("#answer3").html("");
                 $("#answer4").html("");
-                //setTimeout(function () {
-                //    $("#timer").html("");
-                //$(".answer").slideToggle(300);
-                // $("#question").slideToggle(300);
                 answerChosen++;
-                //}, 2000);
-                //setTimeout(function () {
 
             } else {
                 incorrectTotal++
                 console.log("else: " + obj.answer);
                 stopTimer();
                 $("#timer").html("INCORRECT!");
+                setTimeout(function() {
+                    $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
+                }, 1000);
                 $("#answer1").html("");
                 $("#answer2").html("");
                 $("#answer3").html("");
                 $("#answer4").html("");
-                //$("#timer").html("");
                 answerChosen++;
             }
             if (answerChosen == 5) {
-                answerChosen = 1;
-                $(".startButton").slideToggle(300);
-                startGame();
+                setTimeout(function() {
+                    newGame();
+                }, 3000);
+                
             } else {
-                askQuestions();
+                setTimeout(function() {
+                    $("#timer").html("15 SECONDS");
+                    askQuestions();
+                }, 2000);
             }
-
-
-
-
-        
-
-
-
         });
-
-    }
-
-
-
-
-
-
-
-var timer = 16;
-
-
-function runTimer() {
-    timer = 16;
-    intervalId = setInterval(decrement, 1000);
-}
-function decrement() {
-    if (timer > 0) {
-        timer--;
-        if (timer < 10) {
-            $("#timer").html("0" + timer + " SECONDS")
-        } else {
-            $("#timer").html(timer + " SECONDS");
+    
+        function runTimer() {
+            timer = 15;
+            intervalId = setInterval(decrement, 1000);
         }
-    } else {
-        stopTimer();
-        timedOutTotal++
-        answerChosen++
-        $("#timer").html("TIME'S UP!");
-        $("#answer1").html("");
-        $("#answer2").html("");
-        $("#answer3").html("");
-        $("#answer4").html("");
-        //setTimeout(function () {
-            if (answerChosen == 5) {
-                answerChosen = 1;
-                startGame();
+        function decrement() {
+            if (timer > 0) {
+                timer--;
+                if (timer < 10) {
+                    $("#timer").html("0" + timer + " SECONDS")
+                } else {
+                    $("#timer").html(timer + " SECONDS");
+                }
             } else {
-                askQuestions();
+                stopTimer();
+                timedOutTotal++
+                answerChosen++
+                $("#timer").html("TIME'S UP!")
+                setTimeout(function() {
+                    $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
+                }, 1000);
+                $("#answer1").html("");
+                $("#answer2").html("");
+                $("#answer3").html("");
+                $("#answer4").html("");
+                if (answerChosen == 5) {
+                    setTimeout(function() {
+                    $("#correct").html("CORRECT: " + correctTotal);
+                    $("#incorrect").html("INCORRECT: " + incorrectTotal);
+                    $("#timed-out").html("TIMED-OUT: " + timedOutTotal);
+                    $("#timer").html("");
+                    $("#question").html("");
+                    }, 3000);
+                    answerChosen = 1;
+                    setTimeout(function () {
+                        $("#correct").html("");
+                        $("#incorrect").html("");
+                        $("#timed-out").html("");
+                        $(".startButton").slideToggle(300);
+                        startGame();
+                    }, 3000);
+                } else {
+                    setTimeout(function () {
+                    askQuestions();
+                    }, 3000);
+                }
             }
-            
-        //}, 3000);
-
+        }
+    
+    
+    
+    
+    
+    
     }
-}
-function stopTimer() {
-    clearInterval(intervalId);
-}
+
+    function newGame() {
+        $("#correct").html("CORRECT: " + correctTotal);
+        $("#incorrect").html("INCORRECT: " + incorrectTotal);
+        $("#timed-out").html("TIMED-OUT: " + timedOutTotal);
+        $("#timer").html("");
+        $("#question").html("");
+        answerChosen = 1;
+        setTimeout(function () {
+            $("#correct").html("");
+            $("#incorrect").html("");
+            $("#timed-out").html("");
+            correctTotal = 0;
+            incorrectTotal = 0;
+            timedOutTotal = 0;
+            $(".startButton").slideToggle(300);
+            startGame();
+        }, 3000);
+    }
+
+    var timer = 15;
+
+
+    
+
+    function stopTimer() {
+        clearInterval(intervalId);
+    }
 
 
 });
