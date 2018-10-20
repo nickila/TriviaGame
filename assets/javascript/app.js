@@ -7,6 +7,24 @@ $(document).ready(function () {
 
     // Set variables
 
+    //     var canClick = true;
+
+    // $("#message").on("click", function() {
+    // if (canClick) {
+    //     canClick = false;
+    //     doThings();
+    //     setTimeout(function(){
+    //         canClick = true;
+    //     }, 5000);
+    // }
+    // });
+
+    // function doThings(){
+    //     console.log("CLICK");
+    // }
+
+
+
     var correctTotal = 0;
     var incorrectTotal = 0;
     var timedOutTotal = 0;
@@ -40,7 +58,7 @@ $(document).ready(function () {
         wrongAns3: "YELLOW",
     }
     var answerChosen = 1;
-
+    var canClick = true;
     startGame();
 
     function startGame() {
@@ -51,6 +69,7 @@ $(document).ready(function () {
     }
 
     function askQuestions() {
+        canClick = true
         if (answerChosen == 1) {
             display(qa1);
         }
@@ -67,7 +86,6 @@ $(document).ready(function () {
 
     function display(obj) {
         $(".answer").off();
-        console.log("first" + obj.answer);
         $("#timer").html("15 SECONDS");
         runTimer();
 
@@ -80,99 +98,83 @@ $(document).ready(function () {
         $("#answer2").append(stringedAns[1]);
         $("#answer3").append(stringedAns[2]);
         $("#answer4").append(stringedAns[3]);
-        console.log("all: " + stringedAns)
+        console.log("before: " + canClick);
+
         $(".answer").unbind().click(function () {
-            if ($(this).text() == (obj.answer)) {
-                correctTotal++
+            if (canClick) {
+                canClick = false;
+                console.log("after: " + canClick);
+                if ($(this).text() == (obj.answer)) {
+                    correctTotal++
+                    stopTimer();
+                    $("#timer").html(obj.answer + " IS CORRECT!");
+                    $("#answer1").html("");
+                    $("#answer2").html("");
+                    $("#answer3").html("");
+                    $("#answer4").html("");
+                    answerChosen++;
 
-                stopTimer();
-                $("#timer").html("CORRECT!");
-                $("#answer1").html("");
-                $("#answer2").html("");
-                $("#answer3").html("");
-                $("#answer4").html("");
-                answerChosen++;
-
-            } else {
-                incorrectTotal++
-                console.log("else: " + obj.answer);
-                stopTimer();
-                $("#timer").html("INCORRECT!");
-                setTimeout(function() {
-                    $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
-                }, 1000);
-                $("#answer1").html("");
-                $("#answer2").html("");
-                $("#answer3").html("");
-                $("#answer4").html("");
-                answerChosen++;
-            }
-            if (answerChosen == 5) {
-                setTimeout(function() {
-                    newGame();
-                }, 3000);
-                
-            } else {
-                setTimeout(function() {
-                    $("#timer").html("15 SECONDS");
-                    askQuestions();
-                }, 2000);
-            }
-        });
-    
-        function runTimer() {
-            timer = 15;
-            intervalId = setInterval(decrement, 1000);
-        }
-        function decrement() {
-            if (timer > 0) {
-                timer--;
-                if (timer < 10) {
-                    $("#timer").html("0" + timer + " SECONDS")
                 } else {
-                    $("#timer").html(timer + " SECONDS");
+                    incorrectTotal++
+                    stopTimer();
+                    $("#timer").html("INCORRECT!");
+                    setTimeout(function () {
+                        $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
+                    }, 1000);
+                    $("#answer1").html("");
+                    $("#answer2").html("");
+                    $("#answer3").html("");
+                    $("#answer4").html("");
+                    answerChosen++;
                 }
-            } else {
-                stopTimer();
-                timedOutTotal++
-                answerChosen++
-                $("#timer").html("TIME'S UP!")
-                setTimeout(function() {
-                    $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
-                }, 1000);
-                $("#answer1").html("");
-                $("#answer2").html("");
-                $("#answer3").html("");
-                $("#answer4").html("");
                 if (answerChosen == 5) {
-                    setTimeout(function() {
-                    $("#correct").html("CORRECT: " + correctTotal);
-                    $("#incorrect").html("INCORRECT: " + incorrectTotal);
-                    $("#timed-out").html("TIMED-OUT: " + timedOutTotal);
-                    $("#timer").html("");
-                    $("#question").html("");
-                    }, 3000);
-                    answerChosen = 1;
                     setTimeout(function () {
-                        $("#correct").html("");
-                        $("#incorrect").html("");
-                        $("#timed-out").html("");
-                        $(".startButton").slideToggle(300);
-                        startGame();
-                    }, 3000);
+                        newGame();
+                    }, 2000);
                 } else {
                     setTimeout(function () {
-                    askQuestions();
+                        askQuestions();
                     }, 3000);
                 }
             }
+
+        });
+    }
+
+    function runTimer() {
+        timer = 15;
+        intervalId = setInterval(decrement, 1000);
+    }
+    function decrement() {
+        if (timer > 0) {
+            timer--;
+            if (timer < 10) {
+                $("#timer").html("0" + timer + " SECONDS")
+            } else {
+                $("#timer").html(timer + " SECONDS");
+            }
+        } else {
+            stopTimer();
+            timedOutTotal++
+            answerChosen++
+            $("#timer").html("TIME'S UP!")
+            setTimeout(function () {
+                $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
+            }, 1000);
+            $("#answer1").html("");
+            $("#answer2").html("");
+            $("#answer3").html("");
+            $("#answer4").html("");
+            if (answerChosen == 5) {
+                setTimeout(function () {
+                    newGame();
+                }, 2000);
+            } else {
+                setTimeout(function () {
+                    askQuestions();
+                }, 3000);
+            }
         }
-    
-    
-    
-    
-    
-    
     }
 
     function newGame() {
@@ -193,17 +195,10 @@ $(document).ready(function () {
             startGame();
         }, 3000);
     }
-
     var timer = 15;
-
-
-    
-
     function stopTimer() {
         clearInterval(intervalId);
     }
-
-
 });
 
 
