@@ -3,10 +3,7 @@
     margin-left: auto;
     text-align: center;    
 }
-.button {
-    text-align: center;
-    height: 200px;
-}
+
 #question {
     font-size: 50px;
     margin-top: 50px;
@@ -15,8 +12,11 @@
     margin-left: auto;
     
 }
+.startButton {
+    padding-bottom: 0;
+}
 .answer {
-    margin-top: 25px;
+   height: 100%;
 }
 .title {
     font-size: 100px;
@@ -24,6 +24,27 @@
 #timer {
     font-size: 40px;
 }
+#answer1 {
+    background-color: red;
+    color: white;
+}
+#answer2 {
+    background-color: orange;
+    color: white;
+}
+#answer3 {
+    background-color: yellow;
+    color: white;
+}
+#answer4 {
+    background-color: lightgreen;
+    color: white;
+}
+.btn-primary {
+    width: 100%;
+    font-size: 150px;
 
+   
+}
 
   
