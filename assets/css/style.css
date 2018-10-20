@@ -1,5 +1,6 @@
 body {
-    background-color: rgb(45, 136, 255)
+    background-color: rgb(0, 153, 253);
+    font-family: "Patrick Hand", Arial;
 }
 
 .row {
@@ -8,60 +9,80 @@ body {
     text-align: center;    
 }
 .btn {
+    margin-top: 100px;
     background-color: red;
+    border-radius: 40px;
+}
+.btn:hover {
+    background-color: rgb(167, 0, 0);
 }
 
 #question {
-    font-size: 50px;
+    font-size: 60px;
     padding: 20px;
-    margin-top: 25px;
-    color: rgb(31, 88, 161);
-    border-radius: 5px 5px 0 0;
+    margin-top: 15px;
+    color: rgb(0, 99, 165);
+    border-radius: 40px 40px 0 0;
     background-color: white;
     
 }
 .startButton {
     padding-bottom: 0;
+    
 }
 .answer {
    height: 100%;
    padding: 0;
+   background-color: white;
+   font-size: 60px;
 }
 .title {
-    font-size: 100px;
+    margin-top: 15px;
+    font-size: 120px;
     color: white;
 }
 #timer {
-    font-size: 40px;
-    color: white;
+    font-size: 70px;
+    color: rgb(0, 99, 165);
+    background-color: white;
+    border-radius: 0 0 40px 40px;
 }
 #answer1 {
-    background-color: rgb(124, 181, 255);
+    background-color: white;
     color: white;
     padding-right: 0;
+    cursor: pointer;
 }
 .col-12 {
     padding-left: 0;
     padding-right: 0;
 }
 #answer2 {
-    background-color: rgb(153, 196, 253);
+    background-color: white;
     color: white;
+    cursor: pointer;
 }
 #answer3 {
-    background-color: rgb(124, 181, 255);
+    background-color: white;
     color: white;
+    cursor: pointer;
 }
 #answer4 {
-    background-color: rgb(153, 196, 253);
+    background-color: white;
     color: white;
-    border-radius: 0 0 5px 5px;
+    cursor: pointer;
 }
 .btn-primary {
     width: 100%;
-    font-size: 150px;
+    font-size: 200px;
+}
+.scoreboard {
+    
+    color: rgb(0, 99, 165);
+    background-color: white;
+    border-radius: 40px;
 }
 .scores {
-    color: white;
+    font-size: 90px;
 }
   

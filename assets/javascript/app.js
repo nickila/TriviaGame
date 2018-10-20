@@ -30,40 +30,49 @@ $(document).ready(function () {
     var timedOutTotal = 0;
 
     var qa1 = {
-        question: "WHAT COLOR IS A BANANA?",
-        answer: "YELLOW",
-        wrongAns1: "BLUE",
-        wrongAns2: "ORANGE",
-        wrongAns3: "RED",
+        question: "WHO IS THE GIANT IN CASTLE LEMONGRAB?",
+        answer: "LEMONJON",
+        wrongAns1: "LEMONHOPE",
+        wrongAns2: "EARL OF LEMONGRAB",
+        wrongAns3: "TRAVIS",
     };
     var qa2 = {
-        question: "WHAT COLOR IS AN APPLE?",
-        answer: "RED",
-        wrongAns1: "BLUE",
-        wrongAns2: "ORANGE",
-        wrongAns3: "YELLOW",
+        question: "WHICH OF THESE IS NOT JAKE’S CHILD?",
+        answer: "PEPPERMINT BUTLER",
+        wrongAns1: "JAKE JR.",
+        wrongAns2: "KIM KIL WHAN",
+        wrongAns3: "T.V.",
     };
     var qa3 = {
-        question: "WHAT COLOR IS AN ORANGE?",
-        answer: "ORANGE",
-        wrongAns1: "BLUE",
-        wrongAns2: "RED",
-        wrongAns3: "YELLOW",
+        question: "WHAT LANGUAGE DOES LADY RAINICORN SPEAK?",
+        answer: "KOREAN",
+        wrongAns1: "PIG LATIN",
+        wrongAns2: "SPANISH",
+        wrongAns3: "GERMAN",
     }
     var qa4 = {
-        question: "WHAT COLOR IS AN EGGPLANT?",
-        answer: "PURPLE",
-        wrongAns1: "BLUE",
-        wrongAns2: "RED",
-        wrongAns3: "YELLOW",
+        question: "WHO RAISED MARCY AFTER THE MUSHROOM WAR?",
+        answer: "SIMON",
+        wrongAns1: "JAKE",
+        wrongAns2: "BOB",
+        wrongAns3: "CINNAMON BUN",
     }
     var answerChosen = 1;
     var canClick = true;
+    $("#question").hide();
+    $(".answer").hide();
+    $("#answer1").hide();
+    $("#answer2").hide();
+    $("#answer3").hide();
+    $("#answer4").hide();
+    $(".scoreboard").hide();
+    $("#timer").hide()
     startGame();
 
     function startGame() {
         $(".startButton").unbind().click(function () {
             $(".startButton").slideToggle(300);
+            $("#question").slideToggle(300);
             askQuestions();
         });
     }
@@ -88,16 +97,26 @@ $(document).ready(function () {
         $(".answer").off();
         $("#timer").html("15 SECONDS");
         runTimer();
-
         $("#question").html(obj.question);
         var stringedAns = [];
         stringedAns.push(obj.answer, obj.wrongAns1, obj.wrongAns2, obj.wrongAns3);
         stringedAns.sort(function () { return .5 - Math.random(); });
-
+        $("#question").show();
+        $(".answer").show();
+        $("#answer1").show();
+        $("#answer2").show();
+        $("#answer3").show();
+        $("#answer4").show();
+        $(".scores").show();
+        $("#timer").show()
         $("#answer1").append(stringedAns[0]);
         $("#answer2").append(stringedAns[1]);
         $("#answer3").append(stringedAns[2]);
         $("#answer4").append(stringedAns[3]);
+        $("#answer1").css({backgroundColor:"rgb(128, 216, 87)"});
+        $("#answer2").css({backgroundColor:"rgb(97, 187, 55)"});
+        $("#answer3").css({backgroundColor:"rgb(128, 216, 87)"});
+        $("#answer4").css({backgroundColor:"rgb(97, 187, 55)"});
         console.log("before: " + canClick);
 
         $(".answer").unbind().click(function () {
@@ -108,10 +127,7 @@ $(document).ready(function () {
                     correctTotal++
                     stopTimer();
                     $("#timer").html(obj.answer + " IS CORRECT!");
-                    $("#answer1").html("");
-                    $("#answer2").html("");
-                    $("#answer3").html("");
-                    $("#answer4").html("");
+                    clearAnswers();
                     answerChosen++;
 
                 } else {
@@ -121,10 +137,7 @@ $(document).ready(function () {
                     setTimeout(function () {
                         $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
                     }, 1000);
-                    $("#answer1").html("");
-                    $("#answer2").html("");
-                    $("#answer3").html("");
-                    $("#answer4").html("");
+                    clearAnswers();
                     answerChosen++;
                 }
                 if (answerChosen == 5) {
@@ -139,6 +152,16 @@ $(document).ready(function () {
             }
 
         });
+    }
+    function clearAnswers() {
+        $("#answer1").html("");
+        $("#answer2").html("");
+        $("#answer3").html("");
+        $("#answer4").html("");
+        $("#answer1").css({backgroundColor:"white"});
+        $("#answer2").css({backgroundColor:"white"});
+        $("#answer3").css({backgroundColor:"white"});
+        $("#answer4").css({backgroundColor:"white"});
     }
 
     function runTimer() {
@@ -161,10 +184,7 @@ $(document).ready(function () {
             setTimeout(function () {
                 $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
             }, 1000);
-            $("#answer1").html("");
-            $("#answer2").html("");
-            $("#answer3").html("");
-            $("#answer4").html("");
+            clearAnswers();
             if (answerChosen == 5) {
                 setTimeout(function () {
                     newGame();
@@ -178,16 +198,23 @@ $(document).ready(function () {
     }
 
     function newGame() {
+        $(".scoreboard").show();
         $("#correct").html("CORRECT: " + correctTotal);
         $("#incorrect").html("INCORRECT: " + incorrectTotal);
         $("#timed-out").html("TIMED-OUT: " + timedOutTotal);
-        $("#timer").html("");
-        $("#question").html("");
+        $("#timer").hide();
+        $("#question").hide();
+        $("#answer1").hide();
+        $("#answer2").hide();
+        $("#answer3").hide();
+        $("#answer4").hide();
+        
         answerChosen = 1;
         setTimeout(function () {
             $("#correct").html("");
             $("#incorrect").html("");
             $("#timed-out").html("");
+            $(".scoreboard").hide();
             correctTotal = 0;
             incorrectTotal = 0;
             timedOutTotal = 0;
