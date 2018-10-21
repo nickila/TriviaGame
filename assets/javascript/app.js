@@ -29,34 +29,70 @@ $(document).ready(function () {
     var incorrectTotal = 0;
     var timedOutTotal = 0;
 
-    var qa1 = {
-        question: "WHO IS THE GIANT IN CASTLE LEMONGRAB?",
-        answer: "LEMONJON",
-        wrongAns1: "LEMONHOPE",
-        wrongAns2: "EARL OF LEMONGRAB",
-        wrongAns3: "TRAVIS",
-    };
-    var qa2 = {
-        question: "WHICH OF THESE IS NOT JAKE’S CHILD?",
+    var questionAnswer = [
+        {
+        question: "Where does Adventure Time take place?",
+        answer: "THE LAND OF OOO",
+        wrongAns1: "CINCINNATI",
+        wrongAns2: "THE MOON",
+        wrongAns3: "MIDDLE EARTH",
+    },
+    {
+        question: "Which of these is <u>NOT</u> Jake's child?",
         answer: "PEPPERMINT BUTLER",
         wrongAns1: "JAKE JR.",
         wrongAns2: "KIM KIL WHAN",
         wrongAns3: "T.V.",
-    };
-    var qa3 = {
-        question: "WHAT LANGUAGE DOES LADY RAINICORN SPEAK?",
+    },
+    {
+        question: "What language does Lady Rainicorn speak?",
         answer: "KOREAN",
         wrongAns1: "PIG LATIN",
         wrongAns2: "SPANISH",
         wrongAns3: "GERMAN",
-    }
-    var qa4 = {
-        question: "WHO RAISED MARCY AFTER THE MUSHROOM WAR?",
+    },
+    {
+        question: "Who raised Marcy after the Mushroom War?",
         answer: "SIMON",
         wrongAns1: "JAKE",
         wrongAns2: "BOB",
         wrongAns3: "CINNAMON BUN",
-    }
+    },
+    {
+        question: "Who is the giant living in Castle Lemongrab?",
+        answer: "LEMONJON",
+        wrongAns1: "LEMONHOPE",
+        wrongAns2: "EARL OF LEMONGRAB",
+        wrongAns3: "TRAVIS",
+    },
+    {
+        question: "What is Finn's last name?",
+        answer: "MERTENS",
+        wrongAns1: "ROBBINSON",
+        wrongAns2: "HUMAN",
+        wrongAns3: "FRANKLEBURGER",
+    },
+    {
+        question: "What is Princess Bubblegum's first name?",
+        answer: "BONNIBEL",
+        wrongAns1: "SAMANTHA",
+        wrongAns2: "MARCELINE",
+        wrongAns3: "OOEY GOOEY",
+    },
+    {
+        question: "What instrument does Marceline play?",
+        answer: "BASS GUITAR",
+        wrongAns1: "DRUMS",
+        wrongAns2: "TROMBONE",
+        wrongAns3: "COWBELL",
+    },
+    {
+        question: "Who is Ice King's closest penguin?",
+        answer: "GUNTER",
+        wrongAns1: "CLAUS",
+        wrongAns2: "OSCAR",
+        wrongAns3: "OTTO",
+    }];
     var answerChosen = 1;
     var canClick = true;
     $("#question").hide();
@@ -76,22 +112,15 @@ $(document).ready(function () {
             askQuestions();
         });
     }
-
+    var i=0;
     function askQuestions() {
         canClick = true
-        if (answerChosen == 1) {
-            display(qa1);
+        if (i < questionAnswer.length) {
+        display(questionAnswer[i]);
+        } else {
+            clearAnswers();
+            startGame();
         }
-        if (answerChosen == 2) {
-            display(qa2);
-        }
-        if (answerChosen == 3) {
-            display(qa3);
-        }
-        if (answerChosen == 4) {
-            display(qa4);
-        }
-    }
 
     function display(obj) {
         $(".answer").off();
@@ -120,6 +149,7 @@ $(document).ready(function () {
         console.log("before: " + canClick);
 
         $(".answer").unbind().click(function () {
+           
             if (canClick) {
                 canClick = false;
                 console.log("after: " + canClick);
@@ -128,7 +158,7 @@ $(document).ready(function () {
                     stopTimer();
                     $("#timer").html(obj.answer + " IS CORRECT!");
                     clearAnswers();
-                    answerChosen++;
+                    i++;
 
                 } else {
                     incorrectTotal++
@@ -138,10 +168,12 @@ $(document).ready(function () {
                         $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
                     }, 1000);
                     clearAnswers();
-                    answerChosen++;
+                    i++;
+                    console.log("i = " + i);
                 }
-                if (answerChosen == 5) {
+                if (i == questionAnswer.length) {
                     setTimeout(function () {
+                        i = 0;
                         newGame();
                     }, 2000);
                 } else {
@@ -153,6 +185,7 @@ $(document).ready(function () {
 
         });
     }
+
     function clearAnswers() {
         $("#answer1").html("");
         $("#answer2").html("");
@@ -179,7 +212,7 @@ $(document).ready(function () {
         } else {
             stopTimer();
             timedOutTotal++
-            answerChosen++
+            i++
             $("#timer").html("TIME'S UP!")
             setTimeout(function () {
                 $("#timer").html("THE CORRECT ANSWER WAS " + obj.answer);
@@ -222,6 +255,7 @@ $(document).ready(function () {
             startGame();
         }, 3000);
     }
+}
     var timer = 15;
     function stopTimer() {
         clearInterval(intervalId);
