@@ -1,5 +1,5 @@
 # TriviaGame
-I created this Adventure Time Trivia game using HTML, CSS and JavaScript/Jquery.
+I created this Adventure Time Trivia game using HTML, CSS and JavaScript/jQuery.
 Click the START GAME button to begin.
 Answer the questions before the time runs out.
 Your correct answers, incorrect answers and timed-out will accrue and show at the end of the questions.
